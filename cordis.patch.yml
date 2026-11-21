@@ -1,0 +1,22 @@
+# dsh-mind-questions — DSH bundle patch
+# The row only mounts the Host half; the Client module owns rendering.
+- insert:
+    - id: dsh-mind-questions
+      name: dsh-mind-questions
+      config:
+        # Show bubbles at all.
+        enabled: true
+        # Ask the model to mark its own blocking questions inside the reasoning.
+        markers: true
+        # Fallback detection over reasoning prose when the model marks nothing.
+        heuristics: true
+        # Bubbles visible at once (1..9).
+        maxBubbles: 3
+        # Auto-hide delay in seconds; 0 keeps a bubble until answered or dismissed.
+        ttlSec: 60
+        # Empty strip reserved on the right of the frame for the bubbles, px; 0 disables it.
+        gutterPx: 160
+        # Translate a foreign question through ctx.translator before showing it.
+        translateQuestions: true
+        # Target language of that translation.
+        targetLang: ru

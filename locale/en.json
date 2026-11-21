@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Mind questions",
+    "description": "Shows the questions the model leaves unasked in its reasoning as bubbles; answer one in place and it is steered into the session at the next step.",
+    "detail": "docs/DETAIL.md"
+  }
+}

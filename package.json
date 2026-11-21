@@ -1,0 +1,53 @@
+{
+  "name": "dsh-mind-questions",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Bubbles for questions the model leaves unasked in its reasoning, answerable in place and steered back at the next step.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "lib",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "docs",
+    "icon.svg",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "reasoning",
+    "questions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galancev/dsh-questions-mind-reader.git"
+  },
+  "homepage": "https://github.com/galancev/dsh-questions-mind-reader#readme",
+  "bugs": {
+    "url": "https://github.com/galancev/dsh-questions-mind-reader/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  },
+  "license": "MIT"
+}
