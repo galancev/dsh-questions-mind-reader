@@ -100,7 +100,7 @@ window.__ModuleLoader__.load({
 @keyframes dshmq-in{from{opacity:0;transform:translateY(6px) scale(.97);}to{opacity:1;transform:none;}}
 `
 
-    const EMPTY = { enabled: true, maxBubbles: 3, ttlSec: 30, gutterPx: 300, running: false, questions: [] }
+    const EMPTY = { enabled: true, maxBubbles: 3, ttlSec: 30, running: false, questions: [] }
 
     function MindQuestions(props) {
       const { t, useActiveSessionId } = props
@@ -115,14 +115,14 @@ window.__ModuleLoader__.load({
       const [draft, setDraft] = React.useState('')
       const [sending, setSending] = React.useState(false)
       const [failure, setFailure] = React.useState({ id: null, text: '' })
-      const [box, setBox] = React.useState({ right: 12, gutter: 0 })
+      const [anchor, setAnchor] = React.useState(12)
       const [, tick] = React.useState(0)
 
       const editorRef = React.useRef(null)
       const delayRef = React.useRef(1500)
 
-      // Reserve the right strip inside the chat column only: the frame, the
-      // header, the sidebar and the right panel keep their geometry.
+      // Bubbles are an overlay: they follow the right edge of the conversation
+      // column and never change its geometry.
       React.useEffect(() => {
         let frame = 0
         let observed = null
@@ -136,19 +136,9 @@ window.__ModuleLoader__.load({
             observer.observe(surface)
             observed = surface
           }
-          if (!surface) return
-          const rect = surface.getBoundingClientRect()
-          const want = data.enabled === false ? 0 : Math.max(0, Number(data.gutterPx) || 0)
-          let gutter = Math.min(want, Math.max(0, Math.round(rect.width) - 520))
-          if (gutter < 160) gutter = 0
-          if (surface.__dshmqGutter !== gutter) {
-            surface.__dshmqGutter = gutter
-            surface.style.paddingRight = gutter ? gutter + 'px' : ''
-          }
-          const nextRight = Math.max(8, Math.round(window.innerWidth - rect.right) + 12)
-          setBox((prev) =>
-            prev.right === nextRight && prev.gutter === gutter ? prev : { right: nextRight, gutter },
-          )
+          const right = surface ? surface.getBoundingClientRect().right : window.innerWidth
+          const nextRight = Math.max(8, Math.round(window.innerWidth - right) + 12)
+          setAnchor((prev) => (prev === nextRight ? prev : nextRight))
         }
 
         function schedule() {
@@ -164,12 +154,8 @@ window.__ModuleLoader__.load({
           window.removeEventListener('resize', schedule)
           clearInterval(timer)
           if (frame) cancelAnimationFrame(frame)
-          if (observed) {
-            observed.style.paddingRight = ''
-            delete observed.__dshmqGutter
-          }
         }
-      }, [data.enabled, data.gutterPx])
+      }, [])
 
       const visible = React.useMemo(() => {
         const now = Date.now()
@@ -300,7 +286,7 @@ window.__ModuleLoader__.load({
         h('style', { key: 'css' }, CSS),
         h(
           'div',
-          { className: 'dshmq-root', key: 'root', style: { right: box.right + 'px' } },
+          { className: 'dshmq-root', key: 'root', style: { right: anchor + 'px' } },
           visible.map((q) => {
             const isEditor = editorId === q.id
             const full = expanded.has(q.id) || isEditor

@@ -14,8 +14,6 @@
         maxBubbles: 3
         # Auto-hide delay in seconds; 0 keeps a bubble until answered or dismissed.
         ttlSec: 60
-        # Empty strip reserved on the right of the frame for the bubbles, px; 0 disables it.
-        gutterPx: 160
         # Translate a foreign question through ctx.translator before showing it.
         translateQuestions: true
         # Target language of that translation.

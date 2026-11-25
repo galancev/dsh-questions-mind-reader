@@ -34,8 +34,6 @@ const DEFAULTS = {
   maxBubbles: 3,
   /** Auto-hide delay; 0 keeps a bubble until it is answered or closed. */
   ttlSec: 60,
-  /** Width of the empty strip reserved on the right of the frame, in px; 0 disables it. */
-  gutterPx: 160,
   /** Translate a detected question through ctx.translator before showing it. */
   translateQuestions: true,
   /** Target language for that translation. */
@@ -75,7 +73,6 @@ function normalizeConfig(raw) {
     heuristics: src.heuristics !== false,
     maxBubbles: int(src.maxBubbles, DEFAULTS.maxBubbles, 1, 9),
     ttlSec: int(src.ttlSec, DEFAULTS.ttlSec, 0, 600),
-    gutterPx: int(src.gutterPx, DEFAULTS.gutterPx, 0, 600),
     translateQuestions: src.translateQuestions !== false,
     targetLang: typeof src.targetLang === 'string' && /^[a-z]{2,3}(-[A-Za-z]{2,4})?$/.test(src.targetLang)
       ? src.targetLang
@@ -418,7 +415,6 @@ export function apply(ctx, rawConfig) {
           heuristics: config.heuristics,
           maxBubbles: config.maxBubbles,
           ttlSec: config.ttlSec,
-          gutterPx: config.gutterPx,
           running: !!state?.running,
           questions: config.enabled && sessionId ? visible(sessionId) : [],
         })

@@ -25,7 +25,6 @@ Restart DeepSeek Harness afterwards: the Host half is read at startup, the Clien
 | `heuristics` | `true` | Also detect questions from prose |
 | `maxBubbles` | `3` | Bubbles at once, 1–9 |
 | `ttlSec` | `60` | Auto-hide delay; `0` disables it |
-| `gutterPx` | `160` | Empty strip reserved on the right of the chat area, px; `0` disables it |
 | `translateQuestions` | `true` | Translate a foreign question through `ctx.translator` |
 | `targetLang` | `ru` | Target language of that translation |
 
